@@ -6,6 +6,8 @@ import uniqid from "uniqid";
 
 import path, { dirname } from "path";
 
+import { parseFile } from "../utils/upload/index.js";
+
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -142,5 +144,15 @@ router.put("/:id", async (req, res, next) => {
     res.send(500).send({ message: error.message });
   }
 });
+
+router.put(
+  "/:id/avatar",
+  parseFile.single("avatar"),
+  async (req, res, next) => {
+    try {
+      res.send(req.file);
+    } catch (error) {}
+  }
+);
 
 export default router;

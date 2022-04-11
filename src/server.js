@@ -37,9 +37,9 @@ const whiteList = [process.env.FE_DEV_URL, process.env.FE_PROD_URL];
 
 server.use(
   cors({
-    origin: function (origin, next) {
-      console.log(origin);
-      if (!origin || whiteList.indexOf !== -1) {
+    origin: function (Origin, next) {
+      if (!Origin || whiteList.indexOf !== -1) {
+        console.log(Origin, 1);
         next(null, true);
       } else {
         next(createError(404, "CORS error"));

@@ -239,18 +239,6 @@ router.put(
   }
 );
 
-router.post(
-  "/cloudinaryUploader",
-  cloudinaryUploader,
-  async (req, res, next) => {
-    try {
-      res.send();
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 router.put(
   "/:id/cover",
   parseFile.single("cover"),
