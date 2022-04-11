@@ -14,8 +14,6 @@ import path, { dirname } from "path";
 
 import { fileURLToPath } from "url";
 
-import * as dotenv from "dotenv";
-
 import createError from "http-errors";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -25,8 +23,6 @@ const __dirname = dirname(__filename);
 const publicDirectory = path.join(__dirname, "../public");
 
 const server = express();
-
-dotenv.config();
 
 const PORT = process.env.PORT || 3001;
 console.log(PORT);
