@@ -14,6 +14,8 @@ import path, { dirname } from "path";
 
 import { fileURLToPath } from "url";
 
+import multer from "multer";
+
 import createError from "http-errors";
 
 const __filename = fileURLToPath(import.meta.url);

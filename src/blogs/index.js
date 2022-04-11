@@ -6,6 +6,8 @@ import uniqid from "uniqid";
 
 import path, { dirname } from "path";
 
+import multer from "multer";
+
 import { fileURLToPath } from "url";
 import { parseFile, uploadFile } from "../utils/upload/index.js";
 
