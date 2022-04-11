@@ -38,7 +38,7 @@ const whiteList = [process.env.FE_DEV_URL, process.env.FE_PROD_URL];
 server.use(
   cors({
     origin: function (origin, next) {
-      console.log(origin, 2);
+      console.log(origin);
       if (!origin || whiteList.indexOf !== -1) {
         next(null, true);
       } else {
@@ -61,6 +61,7 @@ server.use(catchAllErrorHandler);
 server.listen(PORT, () => {
   console.table(listEndpoints(server));
   console.log(`Server is running on PORT ${PORT}!`);
+  console.log(authorsRouter);
 });
 
 server.on("error", (error) =>
