@@ -9,6 +9,10 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import { parseFile, uploadFile } from "../utils/upload/index.js";
 
+import { v2 as cloudinary } from "cloudinary";
+
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+
 import {
   checkBlogPostSchema,
   checkCommentSchema,
@@ -23,6 +27,9 @@ const __dirname = dirname(__filename);
 const blogsFilePath = path.join(__dirname, "blogs.json");
 
 const router = express.Router();
+const cloudinaryUploader = multer({
+  storage: new CloudinaryStorage({ cloudinary, params: { folder: "j22" } }),
+}).single("cover");
 
 // get all blogs
 router.get("/", async (req, res, next) => {
@@ -226,6 +233,18 @@ router.put(
     } catch (error) {
       console.log(error);
       res.send(500).send({ message: error.message });
+    }
+  }
+);
+
+router.post(
+  "/cloudinaryUploader",
+  cloudinaryUploader,
+  async (req, res, next) => {
+    try {
+      res.send();
+    } catch (error) {
+      next(error);
     }
   }
 );
