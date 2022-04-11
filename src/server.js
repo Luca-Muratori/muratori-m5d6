@@ -61,7 +61,6 @@ server.use(catchAllErrorHandler);
 server.listen(PORT, () => {
   console.table(listEndpoints(server));
   console.log(`Server is running on PORT ${PORT}!`);
-  console.log(authorsRouter);
 });
 
 server.on("error", (error) =>
