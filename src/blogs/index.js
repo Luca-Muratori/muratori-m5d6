@@ -295,17 +295,19 @@ router.get("/:id/downloadBlogPosts", async (req, res, next) => {
     const fileAsString = fileAsBuffer.toString();
     const fileAsJSON = JSON.parse(fileAsString);
     const blog = fileAsJSON.find((blog) => blog.id === req.params.id);
-    console.log(blog);
-    res.setHeader("Content-Disposition", 'attachment; filename=blogs.pdf"');
+
+    res.setHeader("Content-Type", 'application/pdf"');
 
     const source = getPdfReadableStream(blog);
-    const destination = res;
-    pipeline(source, transform, destination, (err) => {
+    console.log({ source });
+    pipeline(source, res, (err) => {
       if (err) {
         console.log(err);
       }
     });
+    source.end();
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: error.message });
   }
 });
