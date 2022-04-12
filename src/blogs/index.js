@@ -26,8 +26,6 @@ import { getPdfReadableStream } from "../utils/upload/pdfMaker.js";
 
 import { pipeline } from "stream";
 
-import { createGzip } from "zlib";
-
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = dirname(__filename);

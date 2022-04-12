@@ -34,8 +34,8 @@ export const getPdfReadableStream = (blog) => {
     },
   };
 
-  const PdfReadableStream = printer.createPdfKitDocument(docDefinition, {});
-  PdfReadableStream.end();
+  const pdfReadableStream = printer.createPdfKitDocument(docDefinition, {});
+  pdfReadableStream.end();
 
   return PdfReadableStream;
 };
