@@ -1,6 +1,6 @@
 import express from "express";
 
-import fs from "fs";
+import fs, { createReadStream } from "fs";
 
 import uniqid from "uniqid";
 
@@ -21,6 +21,12 @@ import {
   checkSearchSchema,
   checkValidationResult,
 } from "./validation.js";
+
+import { getPdfReadableStream } from "../utils/upload/pdfMaker.js";
+
+import { pipeline } from "stream";
+
+import { createGzip } from "zlib";
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -275,5 +281,35 @@ router.put(
     }
   }
 );
+
+const PdfRouter = express.Router();
+
+const filename = fileURLToPath(import.meta.url);
+
+const dirname__ = dirname(filename);
+
+const blogsFilePathPdf = path.join(dirname__, "blogs.json");
+const blogReadStream = createReadStream(blogsFilePathPdf);
+
+router.get("/:id/downloadBlogPosts", async (req, res, next) => {
+  try {
+    const fileAsBuffer = fs.readFileSync(blogsFilePath);
+    const fileAsString = fileAsBuffer.toString();
+    const fileAsJSON = JSON.parse(fileAsString);
+    const blog = fileAsJSON.find((blog) => blog.id === req.params.id);
+    console.log(blog);
+    res.setHeader("Content-Disposition", 'attachment; filename=blogs.pdf"');
+
+    const source = getPdfReadableStream(blog);
+    const destination = res;
+    pipeline(source, transform, destination, (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
 
 export default router;

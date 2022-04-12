@@ -39,7 +39,6 @@ server.use(
   cors({
     origin: function (Origin, next) {
       if (!Origin || whiteList.indexOf !== -1) {
-        console.log(Origin, 1);
         next(null, true);
       } else {
         next(createError(404, "CORS error"));

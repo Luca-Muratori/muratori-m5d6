@@ -2,13 +2,19 @@ import path, { dirname, extname } from "path";
 
 import { fileURLToPath } from "url";
 
-import fs from "fs";
+import express from "express";
+
+import fs, { createReadStream } from "fs";
 
 import multer from "multer";
 
 import { v2 as cloudinary } from "cloudinary";
 
+import { getPdfReadableStream } from "./pdfMaker.js";
+
 import { CloudinaryStorage } from "multer-storage-cloudinary";
+import { pipeline } from "stream";
+import { createGzip } from "zlib";
 
 const { CLOUDINARY_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET } = process.env;
 
