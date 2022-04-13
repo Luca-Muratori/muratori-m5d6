@@ -297,9 +297,9 @@ router.get("/:id/downloadBlogPosts", async (req, res, next) => {
     const blog = fileAsJSON.find((blog) => blog.id === req.params.id);
 
     res.setHeader("Content-Type", 'application/pdf"');
+    console.log(blog);
 
-    const source = getPdfReadableStream(blog);
-    console.log({ source });
+    const source = await getPdfReadableStream(blog);
     pipeline(source, res, (err) => {
       if (err) {
         console.log(err);
