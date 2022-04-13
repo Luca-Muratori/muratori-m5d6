@@ -15,6 +15,8 @@ import { v2 as cloudinary } from "cloudinary";
 
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 
+import { sendRegistrationEmail } from "../utils/email.js";
+
 import {
   checkBlogPostSchema,
   checkCommentSchema,
@@ -83,6 +85,8 @@ router.post(
         updatedAt: new Date(),
       };
 
+      const { email } = req.body;
+
       const fileAsBuffer = fs.readFileSync(blogsFilePath);
 
       const fileAsString = fileAsBuffer.toString();
@@ -93,7 +97,8 @@ router.post(
 
       fs.writeFileSync(blogsFilePath, JSON.stringify(fileAsJSONArray));
 
-      res.send(blog);
+      await sendRegistrationEmail(email);
+      res.send(blog, { message: "email sent correctly!" });
     } catch (error) {
       res.send(500).send({ message: error.message });
     }

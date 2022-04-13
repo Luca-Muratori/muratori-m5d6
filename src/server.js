@@ -8,6 +8,8 @@ import authorsRouter from "./authors/index.js";
 
 import blogsRouter from "./blogs/index.js";
 
+import filesRouter from "./files/index.js";
+
 import { notFound, forbidden, catchAllErrorHandler } from "./errorHandlers.js";
 
 import path, { dirname } from "path";
@@ -50,6 +52,8 @@ server.use(
 server.use("/author", authorsRouter);
 
 server.use("/blog", blogsRouter);
+
+server.use("/file", filesRouter);
 
 server.use(notFound);
 
